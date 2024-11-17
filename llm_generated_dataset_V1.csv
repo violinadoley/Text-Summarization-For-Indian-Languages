@@ -1,0 +1,679 @@
+Comments,Surrounding Code Context,Class
+This function implements the merge sort algorithm on the input array.,def merge_sort(arr): if len(arr) > 1: mid = len(arr) // 2; L = arr[:mid]; R = arr[mid:]; merge_sort(L); merge_sort(R); i = j = k = 0; while i < len(L) and j < len(R): if L[i] < R[j]: arr[k] = L[i]; i += 1; else: arr[k] = R[j]; j += 1; k += 1; while i < len(L): arr[k] = L[i]; i += 1; k += 1; while j < len(R): arr[k] = R[j]; j += 1; k += 1,Useful
+This function delays the execution of a given function until after a specified wait time.,"function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { timeout = null; if (args) func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; };",Useful
+Defines a binary tree node structure with left and right child pointers.,"struct Node { int data; Node* left; Node* right; Node(int val) : data(val), left(nullptr), right(nullptr) {} };",Useful
+Calculates the factorial of a given number using a range and product.,pub fn factorial(n: u64) -> u64 { (1..=n).product() },Useful
+Fetches data from a given URL asynchronously and returns the parsed JSON.,async function fetchData(url) { const response = await fetch(url); const data = await response.json(); return data; },Useful
+Implements the quick sort algorithm to sort an array.,def quick_sort(arr): if len(arr) <= 1: return arr; pivot = arr[len(arr) // 2]; left = [x for x in arr if x < pivot]; middle = [x for x in arr if x == pivot]; right = [x for x in arr if x > pivot]; return quick_sort(left) + middle + quick_sort(right),Useful
+Limits the rate at which a function can be executed to a specified limit.,"function throttle(func, limit) { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan) { func.apply(context, args); lastRan = Date.now(); } else { clearTimeout(lastFunc); lastFunc = setTimeout(function() { if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } }, limit - (Date.now() - lastRan)); } };",Useful
+"Defines a generic stack class that supports push, pop, and is_empty operations.","template<typename T> class Stack { private: std::vector<T> elements; public: void push(const T& element) { elements.push_back(element); } T pop() { if(elements.empty()) throw std::out_of_range(""Stack<>::pop(): empty stack""); T elem = elements.back(); elements.pop_back(); return elem; } bool is_empty() const { return elements.empty(); } };",Useful
+Calculates the nth Fibonacci number using recursion.,"fn fibonacci(n: u32) -> u32 { match n { 0 => 0, 1 => 1, _ => fibonacci(n - 1) + fibonacci(n - 2) } }",Useful
+Creates a linked list with an append method to add values to the list.,"class LinkedList { constructor() { this.head = null; } append(value) { let newNode = { value, next: null }; if (!this.head) { this.head = newNode; return; } let current = this.head; while (current.next) { current = current.next; } current.next = newNode; } }",Useful
+Implements the dynamic programming solution to the 0/1 knapsack problem.,"def knapsack(weights, values, capacity): n = len(values); K = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]; for i in range(n + 1): for w in range(capacity + 1): if i == 0 or w == 0: K[i][w] = 0; elif weights[i-1] <= w: K[i][w] = max(values[i-1] + K[i-1][w-weights[i-1]], K[i-1][w]); else: K[i][w] = K[i-1][w]; return K[n][capacity]",Useful
+Loads an image from a URL and returns a promise that resolves with the image.,"async function loadImage(url) { const img = new Image(); img.src = url; return new Promise((resolve, reject) => { img.onload = () => resolve(img); img.onerror = reject; }); }",Useful
+Defines a binary tree class with a method to insert new values.,"class BinaryTree { constructor(value) { this.root = { value, left: null, right: null }; } insert(value) { const insertNode = (node, value) => { if (!node) return { value, left: null, right: null }; if (value < node.value) { node.left = insertNode(node.left, value); } else { node.right = insertNode(node.right, value); } return node; }; this.root = insertNode(this.root, value); } }",Useful
+Implements binary search algorithm to find the index of a target value in a sorted array.,"def binary_search(arr, target): left, right = 0, len(arr) - 1; while left <= right: mid = (left + right) // 2; if arr[mid] == target: return mid; elif arr[mid] < target: left = mid + 1; else: right = mid - 1; return -1",Useful
+Checks if a given string is a palindrome.,function isPalindrome(str) { const reversed = str.split('').reverse().join(''); return str === reversed; },Useful
+Implements the quicksort algorithm in C++ to sort an array.,"template<typename T> void quicksort(std::vector<T>& arr, int left, int right) { int i = left, j = right; T pivot = arr[(left + right) / 2]; while (i <= j) { while (arr[i] < pivot) i++; while (arr[j] > pivot) j--; if (i <= j) { std::swap(arr[i], arr[j]); i++; j--; } } if (left < j) quicksort(arr, left, j); if (i < right) quicksort(arr, i, right); }",Useful
+Sorts a slice of elements using the merge sort algorithm.,"pub fn merge_sort<T: Ord>(arr: &mut [T]) { let mid = arr.len() / 2; if mid == 0 { return; } merge_sort(&mut arr[..mid]); merge_sort(&mut arr[mid..]); let mut result = Vec::with_capacity(arr.len()); let (mut left, mut right) = (0, mid); while left < mid && right < arr.len() { if arr[left] <= arr[right] { result.push(arr[left]); left += 1; } else { result.push(arr[right]); right += 1; } } result.extend_from_slice(&arr[left..mid]); result.extend_from_slice(&arr[right..]); arr.copy_from_slice(&result); }",Useful
+Defines a graph class that allows adding nodes and edges.,"class Graph { constructor() { this.nodes = {}; } addNode(node) { this.nodes[node] = []; } addEdge(node1, node2) { this.nodes[node1].push(node2); this.nodes[node2].push(node1); } }",Useful
+Implements Dijkstra's algorithm to find the shortest paths from a starting vertex in a graph.,"def dijkstra(graph, start): shortest_paths = {vertex: float('infinity') for vertex in graph}; shortest_paths[start] = 0; pq = [(0, start)]; while pq: current_distance, current_vertex = heapq.heappop(pq); for neighbor, weight in graph[current_vertex].items(): distance = current_distance + weight; if distance < shortest_paths[neighbor]: shortest_paths[neighbor] = distance; heapq.heappush(pq, (distance, neighbor)); return shortest_paths",Useful
+Sorts an array using the selection sort algorithm.,"function selectionSort(arr) { for (let i = 0; i < arr.length - 1; i++) { let minIndex = i; for (let j = i + 1; j < arr.length; j++) { if (arr[j] < arr[minIndex]) { minIndex = j; } } if (minIndex !== i) { [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]; } } return arr; }",Useful
+Defines an AVL tree class with insertion and balancing methods.,"class AVLTree { constructor() { this.root = null; } insert(value) { this.root = this._insert(this.root, value); } _insert(node, value) { if (!node) return new Node(value); if (value < node.value) node.left = this._insert(node.left, value); else if (value > node.value) node.right = this._insert(node.right, value); return this._balance(node); } _balance(node) { // Balancing logic here } }",Useful
+Implements breadth-first search algorithm to traverse a graph.,"def bfs(graph, start): visited = set(); queue = [start]; while queue: vertex = queue.pop(0); if vertex not in visited: visited.add(vertex); queue.extend(set(graph[vertex]) - visited); return visited",Useful
+Merges two sorted arrays into one sorted array.,"function mergeArrays(arr1, arr2) { let merged = []; let i = 0, j = 0; while (i < arr1.length && j < arr2.length) { if (arr1[i] < arr2[j]) { merged.push(arr1[i++]); } else { merged.push(arr2[j++]); } } return merged.concat(arr1.slice(i)).concat(arr2.slice(j)); }",Useful
+Calculates the depth of a binary tree recursively.,"pub fn binary_tree_depth<T>(node: &Option<Box<Node<T>>>) -> usize { match node { Some(n) => 1 + binary_tree_depth(&n.left).max(binary_tree_depth(&n.right)), None => 0, } }",Useful
+Defines a simple queue class with enqueue and dequeue methods.,class Queue { constructor() { this.items = []; } enqueue(item) { this.items.push(item); } dequeue() { return this.items.shift(); } isEmpty() { return this.items.length === 0; } },Useful
+Determines whether a number is prime or not.,"def is_prime(num): if num < 2: return False; for i in range(2, int(num**0.5) + 1): if num % i == 0: return False; return True",Useful
+Calculates the factorial of a number using recursion.,function factorial(n) { if (n < 0) return undefined; return n === 0 ? 1 : n * factorial(n - 1); },Useful
+Defines a max heap data structure with insertion functionality.,"class MaxHeap { constructor() { this.heap = []; } insert(num) { this.heap.push(num); this.bubbleUp(); } bubbleUp() { let index = this.heap.length - 1; while (index > 0) { let parentIndex = Math.floor((index - 1) / 2); if (this.heap[parentIndex] >= this.heap[index]) break; [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]]; index = parentIndex; } } }",Useful
+Removes duplicates from a vector in Rust.,pub fn remove_duplicates(vec: &mut Vec<i32>) { let mut seen = HashSet::new(); vec.retain(|&x| seen.insert(x)); },Useful
+Rotates an array to the right by k steps.,"def rotate_array(arr, k): k = k % len(arr); return arr[-k:] + arr[:-k]",Useful
+Performs binary search on a sorted array to find the target index.,"function binarySearch(arr, target) { let left = 0, right = arr.length - 1; while (left <= right) { const mid = Math.floor((left + right) / 2); if (arr[mid] === target) return mid; if (arr[mid] < target) left = mid + 1; else right = mid - 1; } return -1; }",Useful
+Computes the length of the longest common subsequence between two strings.,"def longest_common_subsequence(a, b): m, n = len(a), len(b); dp = [[0] * (n + 1) for _ in range(m + 1)]; for i in range(1, m + 1): for j in range(1, n + 1): if a[i - 1] == b[j - 1]: dp[i][j] = dp[i - 1][j - 1] + 1; else: dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); return dp[m][n]",Useful
+Defines a trie data structure for efficient word storage and retrieval.,class TrieNode { constructor() { this.children = {}; this.isEndOfWord = false; } } class Trie { constructor() { this.root = new TrieNode(); } insert(word) { let node = this.root; for (let char of word) { if (!node.children[char]) { node.children[char] = new TrieNode(); } node = node.children[char]; } node.isEndOfWord = true; } },Useful
+Performs in-order traversal of a binary tree.,def binary_tree_inorder(node): return binary_tree_inorder(node.left) + [node.value] + binary_tree_inorder(node.right) if node else [],Useful
+Counts the number of vowels in a given string.,function countVowels(str) { return str.match(/[aeiou]/gi)?.length || 0; },Useful
+This function implements the merge sort algorithm to sort an array.,def merge_sort(arr): if len(arr) > 1: mid = len(arr) // 2; L = arr[:mid]; R = arr[mid:]; merge_sort(L); merge_sort(R); i = j = k = 0; while i < len(L) and j < len(R): if L[i] < R[j]: arr[k] = L[i]; i += 1; else: arr[k] = R[j]; j += 1; k += 1; while i < len(L): arr[k] = L[i]; i += 1; k += 1; while j < len(R): arr[k] = R[j]; j += 1; k += 1,Useful
+This class is for creating a graph.,"class Graph: def __init__(self): self.vertices = {}; def add_vertex(self, vertex): self.vertices[vertex] = []; def add_edge(self, vertex1, vertex2): self.vertices[vertex1].append(vertex2); self.vertices[vertex2].append(vertex1)",Not Useful
+This function helps in limiting the rate at which a function can fire.,"function debounce(func, delay) { let timeout; return function(...args) { const context = this; clearTimeout(timeout); timeout = setTimeout(() => func.apply(context, args), delay); }; }",Useful
+This function reverses a linked list.,struct Node { int data; Node* next; }; Node* reverse(Node* head) { Node* prev = nullptr; Node* current = head; Node* next = nullptr; while (current != nullptr) { next = current->next; current->next = prev; prev = current; current = next; } return prev; },Useful
+Calculates the Fibonacci number recursively.,"pub fn fibonacci(n: u32) -> u32 { match n { 0 => 0, 1 => 1, _ => fibonacci(n - 1) + fibonacci(n - 2), } }",Useful
+Checks if two strings are anagrams.,"def is_anagram(str1, str2): return sorted(str1) == sorted(str2)",Useful
+This function sorts an array using the quicksort algorithm.,"function quickSort(arr) { if (arr.length <= 1) return arr; let pivot = arr[arr.length - 1]; let left = [], right = []; for (let i = 0; i < arr.length - 1; i++) { if (arr[i] < pivot) left.push(arr[i]); else right.push(arr[i]); } return [...quickSort(left), pivot, ...quickSort(right)]; }",Useful
+This class models a user with a username and password.,"class User: def __init__(self, username, password): self.username = username; self.password = password; def check_password(self, password): return self.password == password",Not Useful
+This function implements Dijkstra's algorithm to find the shortest path in a weighted graph.,"def dijkstra(graph, start): shortest_path = {vertex: float('infinity') for vertex in graph}; shortest_path[start] = 0; priority_queue = [(0, start)]; while priority_queue: current_distance, current_vertex = heapq.heappop(priority_queue); for neighbor, weight in graph[current_vertex].items(): distance = current_distance + weight; if distance < shortest_path[neighbor]: shortest_path[neighbor] = distance; heapq.heappush(priority_queue, (distance, neighbor)); return shortest_path",Useful
+Performs a binary search on a sorted array.,"fn binary_search(arr: &[i32], target: i32) -> Option<usize> { let mut left = 0; let mut right = arr.len(); while left < right { let mid = left + (right - left) / 2; if arr[mid] == target { return Some(mid); } else if arr[mid] < target { left = mid + 1; } else { right = mid; } } None }",Useful
+Counts the number of vowels in a string.,def count_vowels(s): return sum(1 for char in s if char.lower() in 'aeiou'),Useful
+This class represents a car.,"class Car: def __init__(self, make, model, year): self.make = make; self.model = model; self.year = year; def display_info(self): return f'{self.year} {self.make} {self.model}'",Not Useful
+This function fetches data from a URL.,function fetchData(url) { return fetch(url).then(response => response.json()).then(data => console.log(data)); },Not Useful
+Calculates Fibonacci numbers using iteration.,"def fibonacci_iter(n): a, b = 0, 1; for _ in range(n): a, b = b, a + b; return a",Useful
+This class implements a stack data structure.,"class Stack: def __init__(self): self.items = []; def push(self, item): self.items.append(item); def pop(self): return self.items.pop() if not self.is_empty() else None; def is_empty(self): return len(self.items) == 0",Not Useful
+Merges two sorted arrays into one.,"function merge(arr1, arr2) { let merged = []; let i = 0; let j = 0; while (i < arr1.length && j < arr2.length) { if (arr1[i] < arr2[j]) { merged.push(arr1[i++]); } else { merged.push(arr2[j++]); } } return merged.concat(arr1.slice(i)).concat(arr2.slice(j)); }",Useful
+Checks if a number is prime.,"def is_prime(num): if num < 2: return False; for i in range(2, int(num**0.5) + 1): if num % i == 0: return False; return True",Useful
+Calculates the greatest common divisor using recursion.,"fn gcd(a: u32, b: u32) -> u32 { if b == 0 { a } else { gcd(b, a % b) } }",Useful
+This class converts Celsius to Fahrenheit.,"class Temperature: def __init__(self, celsius): self.celsius = celsius; def to_fahrenheit(self): return (self.celsius * 9 / 5) + 32",Not Useful
+This function checks if a string is a palindrome.,function is_palindrome(str) { return str === str.split('').reverse().join(''); },Useful
+Searches for a value in a binary tree.,"def binary_tree_search(node, target): if node is None: return False; if node.value == target: return True; return binary_tree_search(node.left, target) or binary_tree_search(node.right, target)",Useful
+This class defines a linked list.,"class LinkedList: def __init__(self): self.head = None; def append(self, data): new_node = Node(data); if self.head is None: self.head = new_node; else: last = self.head; while last.next: last = last.next; last.next = new_node",Not Useful
+Computes the factorial of a number.,function factorial(n) { if (n === 0) return 1; return n * factorial(n - 1); },Useful
+This function sorts an array using the merge sort algorithm.,"pub fn merge_sort<T: Ord>(arr: &mut [T]) { let mid = arr.len() / 2; if mid == 0 { return; } merge_sort(&mut arr[0..mid]); merge_sort(&mut arr[mid..]); let mut merged = Vec::with_capacity(arr.len()); let (mut left, mut right) = (0, mid); while left < mid && right < arr.len() { if arr[left] <= arr[right] { merged.push(arr[left]); left += 1; } else { merged.push(arr[right]); right += 1; } } merged.extend_from_slice(&arr[left..mid]); merged.extend_from_slice(&arr[right..]); arr.copy_from_slice(&merged); }",Useful
+Finds two indices of numbers in an array that add up to the target.,"def two_sum(nums, target): num_map = {}; for i, num in enumerate(nums): complement = target - num; if complement in num_map: return [num_map[complement], i]; num_map[num] = i",Useful
+This class implements a queue data structure.,"class Queue: def __init__(self): self.items = []; def enqueue(self, item): self.items.append(item); def dequeue(self): return self.items.pop(0) if not self.is_empty() else None; def is_empty(self): return len(self.items) == 0",Not Useful
+Removes duplicate values from an array.,function remove_duplicates(arr) { return [...new Set(arr)]; },Useful
+Flattens a nested list into a single list.,def flatten(lst): return [item for sublist in lst for item in sublist],Useful
+Counts the occurrences of each word in a string.,"pub fn count_words(s: &str) -> HashMap<&str, usize> { let mut word_count = HashMap::new(); for word in s.split_whitespace() { *word_count.entry(word).or_insert(0) += 1; } word_count }",Useful
+Finds the longest common prefix string amongst an array of strings.,def longest_common_prefix(strs): if not strs: return ''; prefix = strs[0]; for s in strs[1:]: while s[:len(prefix)] != prefix and prefix: prefix = prefix[:-1]; return prefix,Useful
+Generates a Fibonacci sequence up to n.,"function generate_fibonacci(n) { let fib = [0, 1]; for (let i = 2; i < n; i++) { fib[i] = fib[i - 1] + fib[i - 2]; } return fib; }",Useful
+Performs a binary search recursively.,"def binary_search_recursive(arr, target, low, high): if low > high: return -1; mid = (low + high) // 2; if arr[mid] == target: return mid; elif arr[mid] < target: return binary_search_recursive(arr, target, mid + 1, high); else: return binary_search_recursive(arr, target, low, mid - 1)",Useful
+This class defines a person with a name and age.,"class Person: def __init__(self, name, age): self.name = name; self.age = age; def birthday(self): self.age += 1",Not Useful
+Counts down from n to 1.,function count_down(n) { while (n > 0) { console.log(n); n--; } },Not Useful
+Rotates the elements of the array to the right by k steps.,"def rotate_array(arr, k): k = k % len(arr); return arr[-k:] + arr[:-k]",Useful
+Calculates the nth Fibonacci number using an iterative approach.,"def fibonacci(n): a, b = 0, 1; for _ in range(n): a, b = b, a + b; return a",Useful
+This class represents a graph.,"class Graph: def __init__(self): self.edges = {}; def add_edge(self, u, v): if u not in self.edges: self.edges[u] = []; self.edges[u].append(v)",Not Useful
+This function sorts an array.,"function mergeSort(arr) { if (arr.length <= 1) return arr; const mid = Math.floor(arr.length / 2); const left = mergeSort(arr.slice(0, mid)); const right = mergeSort(arr.slice(mid)); return merge(left, right); }",Not Useful
+Defines a linked list node and its associated list methods.,"struct Node { int data; Node* next; Node(int val) : data(val), next(nullptr) {} }; class LinkedList { Node* head; public: LinkedList() : head(nullptr) {} void append(int val) { Node* newNode = new Node(val); if (!head) { head = newNode; return; } Node* temp = head; while (temp->next) { temp = temp->next; } temp->next = newNode; }};",Useful
+This function fetches data from a given URL and returns it as JSON.,async function fetchData(url) { const response = await fetch(url); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); return data; },Useful
+This struct defines a Point in 2D space with methods for instantiation and distance calculation.,"pub struct Point { pub x: f64, pub y: f64 } impl Point { pub fn new(x: f64, y: f64) -> Point { Point { x, y } } pub fn distance(&self, other: &Point) -> f64 { ((self.x - other.x).powi(2) + (self.y - other.y).powi(2)).sqrt() } }",Useful
+Performs a binary search on sorted array to find the index of the target value.,"def binary_search(arr, target): low, high = 0, len(arr) - 1; while low <= high: mid = (low + high) // 2; if arr[mid] == target: return mid; elif arr[mid] < target: low = mid + 1; else: high = mid - 1; return -1",Useful
+This class implements a queue data structure.,class Queue { constructor() { this.items = []; } enqueue(element) { this.items.push(element); } dequeue() { return this.items.shift(); } isEmpty() { return this.items.length == 0; } },Useful
+Checks if a given number is prime.,"def is_prime(num): if num < 2: return False; for i in range(2, int(num ** 0.5) + 1): if num % i == 0: return False; return True",Useful
+Implements the quicksort algorithm to sort an array in place.,pub fn quicksort(arr: &mut [i32]) { if arr.len() <= 1 { return; } let pivot_index = partition(arr); quicksort(&mut arr[0..pivot_index]); quicksort(&mut arr[pivot_index + 1..]); },Useful
+Creates a debounced function that delays invoking func until after wait milliseconds.,"function debounce(func, wait) { let timeout; return function(...args) { const context = this; clearTimeout(timeout); timeout = setTimeout(() => func.apply(context, args), wait); }; }",Useful
+Defines a binary tree node and structure.,"class TreeNode { int val; TreeNode* left; TreeNode* right; TreeNode(int x) : val(x), left(NULL), right(NULL) {} }; class BinaryTree { TreeNode* root; public: void insert(int val) { // TODO: Implement insertion logic } }",Not Useful
+This function checks if two strings are anagrams.,"def anagram_check(str1, str2): return sorted(str1) == sorted(str2)",Useful
+Limits the rate at which a function can be called.,"function throttle(func, limit) { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan) { func.apply(context, args); lastRan = Date.now(); } else { clearTimeout(lastFunc); lastFunc = setTimeout(function() { if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } }, limit - (Date.now() - lastRan)); } }; }",Useful
+Merges two dictionaries into one.,"def merge_dicts(dict1, dict2): return {**dict1, **dict2}",Useful
+Handles GET requests in a simple HTTP server.,"class SimpleHTTPServer: def do_GET(self): self.send_response(200); self.send_header('Content-type', 'text/html'); self.end_headers(); self.wfile.write(b'Hello, World!')",Useful
+Calculates the factorial of a number using an iterator.,pub fn factorial(n: u64) -> u64 { (1..=n).product() },Useful
+Calculates the length of the longest common subsequence between two strings.,"def longest_common_subsequence(str1, str2): dp = [[0] * (len(str2) + 1) for _ in range(len(str1) + 1)]; for i in range(1, len(str1) + 1): for j in range(1, len(str2) + 1): if str1[i - 1] == str2[j - 1]: dp[i][j] = dp[i - 1][j - 1] + 1; else: dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); return dp[-1][-1]",Useful
+Makes an AJAX GET request to the specified URL.,"function ajaxGet(url) { const xhr = new XMLHttpRequest(); xhr.open('GET', url); xhr.onload = function() { if (xhr.status >= 200 && xhr.status < 400) { console.log(xhr.responseText); } }; xhr.send(); }",Useful
+Implements a generic stack data structure.,template <typename T> class Stack { private: std::vector<T> elements; public: void push(const T& element) { elements.push_back(element); } T pop() { if (elements.empty()) throw std::out_of_range('Stack<>::pop(): empty stack!'); T elem = elements.back(); elements.pop_back(); return elem; } };,Useful
+Rotates a square matrix 90 degrees clockwise.,"def rotate_matrix(matrix): n = len(matrix); for i in range(n): for j in range(i, n): matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]; matrix.reverse()",Useful
+Defines a User class and prints user information.,"class User { public: string name; int age; User(string n, int a) : name(n), age(a) {} }; vector<User> users; for (auto& user : users) { cout << user.name << ' ' << user.age; }",Not Useful
+"Sorts a list of tuples based on the second element, then the first.","def custom_sort(arr): return sorted(arr, key=lambda x: (x[1], x[0]))",Useful
+Implements the observer pattern for a subject.,class Subject { private: string name; vector<Observer*> observers; public: void attach(Observer* obs) { observers.push_back(obs); } void notify() { for (Observer* obs : observers) obs->update(); } };,Useful
+Counts the number of vowels in a given string.,def count_vowels(s): return sum(1 for char in s if char in 'aeiouAEIOU'),Useful
+Creates a reducer function for state management.,"function createReducer(reducer, initialState) { return function(state, action) { const nextState = reducer(state, action); return nextState !== undefined ? nextState : state; }; }",Useful
+Sorts an array using the merge sort algorithm.,"pub fn merge_sort<T: Ord>(arr: &mut [T]) { let mid = arr.len() / 2; if mid == 0 { return; } let left = &mut arr[..mid]; let right = &mut arr[mid..]; merge_sort(left); merge_sort(right); merge(left, right); }",Useful
+Returns a list of unique elements from the input list.,def unique_elements(lst): return list(set(lst)),Useful
+Defines a database class with connection methods.,class Database { public: void connect(); void disconnect(); }; void Database::connect() { // Connection logic here },Not Useful
+Flattens a nested list into a single list.,def flatten(nested_list): return [item for sublist in nested_list for item in sublist],Useful
+Calculates the height of a binary tree.,"pub fn binary_tree_height(node: Option<Box<TreeNode>>) -> usize { match node { Some(n) => 1 + max(binary_tree_height(n.left), binary_tree_height(n.right)), None => 0 } }",Useful
+Generates all permutations of a given list.,def generate_permutations(arr): if len(arr) == 0: return [[]]; return [[arr[i]] + p for i in range(len(arr)) for p in generate_permutations(arr[:i] + arr[i+1:])],Useful
+Validates if a string is a proper email format.,function validateEmail(email) { const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return regex.test(email); },Useful
+Implements an LRU cache decorator for function results.,def lru_cache(max_size): def decorator(func): cache = {} def wrapper(*args): if args in cache: return cache[args]; if len(cache) >= max_size: cache.popitem(last=False); cache[args] = func(*args); return cache[args]; return wrapper; return decorator,Useful
+Finds the maximum value in an array.,pub fn find_max(arr: &[i32]) -> i32 { *arr.iter().max().unwrap() },Useful
+This function implements the quicksort algorithm which sorts an array by selecting a pivot and partitioning the array.,def quicksort(arr): if len(arr) <= 1: return arr else: pivot = arr[len(arr) // 2] left = [x for x in arr if x < pivot] middle = [x for x in arr if x == pivot] right = [x for x in arr if x > pivot] return quicksort(left) + middle + quicksort(right),Useful
+This function merges two sorted arrays into a single sorted array.,"const mergeSortedArrays = (arr1, arr2) => { let merged = []; let i = 0; let j = 0; while (i < arr1.length && j < arr2.length) { if (arr1[i] < arr2[j]) { merged.push(arr1[i++]); } else { merged.push(arr2[j++]); } } return merged.concat(arr1.slice(i)).concat(arr2.slice(j)); };",Useful
+This class represents a graph data structure and allows adding edges between vertices.,"class Graph: def __init__(self): self.vertices = {} def add_edge(self, v1, v2): if v1 not in self.vertices: self.vertices[v1] = [] self.vertices[v1].append(v2)",Useful
+This function fetches data from a given URL asynchronously and handles errors related to the network response.,async function fetchData(url) { const response = await fetch(url); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); return data; },Useful
+This struct defines a node in a binary tree with integer value and pointers to left and right child nodes.,"struct TreeNode { int val; TreeNode *left; TreeNode *right; TreeNode(int x) : val(x), left(NULL), right(NULL) {} };",Useful
+This function calculates the nth Fibonacci number using an iterative approach.,"def fibonacci(n): a, b = 0, 1 for _ in range(n): a, b = b, a + b return a",Useful
+This class implements a singly linked list with a method to append new nodes at the end.,"class LinkedList: def __init__(self): self.head = None def append(self, data): new_node = Node(data) if not self.head: self.head = new_node return current = self.head while current.next: current = current.next current.next = new_node",Useful
+This function performs a binary search on a sorted array to find the index of the target value.,"def binary_search(arr, target): low, high = 0, len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] < target: low = mid + 1 elif arr[mid] > target: high = mid - 1 else: return mid return -1",Useful
+This class represents a vehicle with a specific number of wheels and a method to retrieve that number.,"class Vehicle: def __init__(self, wheels): self.wheels = wheels def get_wheels(self): return self.wheels",Useful
+This function checks if a given string is a palindrome by comparing it to its reverse.,def is_palindrome(s): return s == s[::-1],Useful
+This function sends a POST request to a specified URL with JSON data and returns the response.,"async function postData(url = '', data = {}) { const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); return response.json(); }",Useful
+This template class implements a stack data structure with push and pop operations.,template <typename T> class Stack { private: vector<T> elements; public: void push(const T& element) { elements.push_back(element); } T pop() { if (elements.empty()) throw out_of_range('Stack<>::pop(): empty stack'); T elem = elements.back(); elements.pop_back(); return elem; } };,Useful
+This function implements the merge sort algorithm to sort an array by recursively dividing it into halves.,"def merge_sort(arr): if len(arr) <= 1: return arr mid = len(arr) // 2 left_half = merge_sort(arr[:mid]) right_half = merge_sort(arr[mid:]) return merge(left_half, right_half)",Useful
+This function creates a debounced version of a function that delays its execution until after a specified delay.,"function debounce(func, delay) { let timeout; return function(...args) { const context = this; clearTimeout(timeout); timeout = setTimeout(() => func.apply(context, args), delay); }; }",Useful
+This class maintains a count and provides methods to increment and retrieve the count value.,class Counter: def __init__(self): self.count = 0 def increment(self): self.count += 1 def get_count(self): return self.count,Useful
+This function implements Kadane's algorithm to find the maximum sum of a contiguous subarray.,"def find_max_subarray(arr): max_sum = current_sum = arr[0] for num in arr[1:]: current_sum = max(num, current_sum + num) max_sum = max(max_sum, current_sum) return max_sum",Useful
+This class represents a matrix and provides a method to compute its transpose.,"class Matrix: def __init__(self, data): self.data = data def transpose(self): return [[self.data[j][i] for j in range(len(self.data))] for i in range(len(self.data[0]))]",Useful
+This function performs depth-first search on a graph starting from a given vertex.,"def depth_first_search(graph, start): visited, stack = set(), [start] while stack: vertex = stack.pop() if vertex not in visited: visited.add(vertex) stack.extend(set(graph[vertex]) - visited) return visited",Useful
+This class represents a user with a username and email and provides a string representation.,"class User: def __init__(self, username, email): self.username = username self.email = email def __str__(self): return f'User: {self.username}, Email: {self.email}'",Useful
+This function calculates the angle between the hour and minute hands of a clock.,"def clock_angle(hour, minute): hour_angle = (hour % 12 + minute / 60) * 30 minute_angle = minute * 6 return abs(hour_angle - minute_angle)",Useful
+This class implements a queue data structure with enqueue and dequeue operations.,"class Queue: def __init__(self): self.items = [] def enqueue(self, item): self.items.insert(0, item) def dequeue(self): return self.items.pop()",Useful
+This function computes the prime factors of a given number using trial division.,"def prime_factors(n): factors = [] for i in range(2, int(n**0.5) + 1): while n % i == 0: factors.append(i) n //= i if n > 1: factors.append(n) return factors",Useful
+This function loads data from a URL and parses it as CSV format.,async function loadAndParse(url) { const response = await fetch(url); const text = await response.text(); return parseCSV(text); },Useful
+This class hierarchy defines a base Shape class and a Rectangle class that calculates its area.,"class Shape: def area(self): pass class Rectangle(Shape): def __init__(self, width, height): self.width = width self.height = height def area(self): return self.width * self.height",Useful
+This function rotates an array to the right by k steps in-place.,"def rotate_array(arr, k): n = len(arr) k = k % n arr[:] = arr[-k:] + arr[:-k]",Useful
+"This class manages file operations, including reading the contents of a file.","class FileManager: def __init__(self, filename): self.filename = filename def read(self): with open(self.filename, 'r') as file: return file.read()",Useful
+This function finds the longest common prefix string among an array of strings.,def longest_common_prefix(strs): if not strs: return '' prefix = strs[0] for s in strs[1:]: while s[:len(prefix)] != prefix and prefix: prefix = prefix[:-1] return prefix,Useful
+This code demonstrates inheritance where Dog class inherits from Animal class and overrides the speak method.,class Animal: def speak(self): pass class Dog(Animal): def speak(self): return 'Woof!',Useful
+This function calculates the final price after applying a discount percentage.,"def calculate_discount(price, discount): return price - (price * discount / 100)",Useful
+This function flattens a nested array into a single array.,"function flatten(arr) { return arr.reduce((flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten), []); }",Useful
+This function counts the number of words in a given string by splitting it.,def count_words(s): return len(s.split()),Useful
+This class represents a bank account with methods for depositing and withdrawing funds.,"class BankAccount: def __init__(self, balance): self.balance = balance def deposit(self, amount): self.balance += amount def withdraw(self, amount): if amount > self.balance: raise ValueError('Insufficient funds') self.balance -= amount",Useful
+This function computes the greatest common divisor of two integers using the Euclidean algorithm.,"def gcd(a, b): while b: a, b = b, a % b return a",Useful
+"This class represents a person with a name and age, and provides a method to increment their age.","class Person: def __init__(self, name, age): self.name = name self.age = age def birthday(self): self.age += 1",Useful
+This function checks if a string has valid parentheses by using a stack.,def valid_parentheses(s): stack = [] for char in s: if char in '(': stack.append(char) elif char in ')': if not stack: return False stack.pop() return not stack,Useful
+This function implements the 0/1 Knapsack problem using dynamic programming to maximize the value that can be carried within a given capacity.,"def knapsack(weights, values, capacity): n = len(values) dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)] for i in range(n + 1): for w in range(capacity + 1): if i == 0 or w == 0: dp[i][w] = 0 elif weights[i-1] <= w: dp[i][w] = max(values[i-1] + dp[i-1][w - weights[i-1]], dp[i-1][w]) else: dp[i][w] = dp[i-1][w] return dp[n][capacity]",Useful
+This class represents a directed graph and contains methods to add edges and perform breadth-first search.,"class Graph: def __init__(self): self.graph = {} def add_edge(self, u, v): if u not in self.graph: self.graph[u] = [] self.graph[u].append(v) def bfs(self, start): visited = set() queue = [start] while queue: vertex = queue.pop(0) if vertex not in visited: visited.add(vertex) queue.extend(set(self.graph[vertex]) - visited)",Useful
+"This function sorts an array using the merge sort algorithm, which is a divide-and-conquer sorting technique.","function mergeSort(arr) { if (arr.length < 2) return arr; const mid = Math.floor(arr.length / 2); const left = mergeSort(arr.slice(0, mid)); const right = mergeSort(arr.slice(mid)); return merge(left, right); } function merge(left, right) { let result = [], i = 0, j = 0; while (i < left.length && j < right.length) { if (left[i] < right[j]) result.push(left[i++]); else result.push(right[j++]); } return result.concat(left.slice(i)).concat(right.slice(j)); }",Useful
+This code defines a binary tree in C++ with an insert method to add nodes while maintaining the properties of the binary search tree.,"struct Node { int data; Node* left; Node* right; Node(int val) : data(val), left(nullptr), right(nullptr) {} }; class BinaryTree { public: Node* root; BinaryTree() : root(nullptr) {} void insert(int val) { root = insertRec(root, val); } private: Node* insertRec(Node* node, int val) { if (node == nullptr) return new Node(val); if (val < node->data) node->left = insertRec(node->left, val); else node->right = insertRec(node->right, val); return node; }};",Useful
+"This implementation of a queue uses two stacks to manage elements, allowing for standard queue operations like push and pop.","impl MyQueue { stack: Vec<i32>, temp_stack: Vec<i32> } impl MyQueue { fn new() -> Self { MyQueue { stack: Vec::new(), temp_stack: Vec::new() } } fn push(&mut self, x: i32) { self.stack.push(x); } fn pop(&mut self) -> i32 { while let Some(val) = self.stack.pop() { self.temp_stack.push(val); } let front = self.temp_stack.pop().unwrap(); while let Some(val) = self.temp_stack.pop() { self.stack.push(val); } front } fn peek(&self) -> i32 { *self.stack.last().unwrap() } fn empty(&self) -> bool { self.stack.is_empty() }}",Useful
+This code defines an LRU (Least Recently Used) cache decorator to optimize function calls by caching results.,def lru_cache(maxsize=128): def decorator(func): cache = {} def wrapper(*args): if args in cache: return cache[args] if len(cache) >= maxsize: cache.popitem() cache[args] = func(*args) return cache[args] return wrapper return decorator,Useful
+"This function creates a debounced version of the provided function, ensuring that it can only be called after a specified delay.","function debounce(func, wait) { let timeout; return function(...args) { const context = this; clearTimeout(timeout); timeout = setTimeout(() => func.apply(context, args), wait); }; }",Useful
+This code finds the longest common prefix among a list of strings using a character-by-character comparison.,"class Solution: def longestCommonPrefix(self, strs: List[str]) -> str: if not strs: return '' prefix = strs[0] for s in strs[1:]: while not s.startswith(prefix): prefix = prefix[:-1] if not prefix: return '' return prefix",Useful
+"This function implements the quicksort algorithm, which sorts an array by selecting a pivot and partitioning the array.",def quicksort(arr): if len(arr) <= 1: return arr pivot = arr[len(arr) // 2] left = [x for x in arr if x < pivot] middle = [x for x in arr if x == pivot] right = [x for x in arr if x > pivot] return quicksort(left) + middle + quicksort(right),Useful
+"This class represents a circular queue with methods to add and remove elements, handling wrap-around efficiently.","class CircularQueue: def __init__(self, size): self.size = size self.queue = [None] * size self.front = self.rear = -1 def enqueue(self, item): if (self.rear + 1) % self.size == self.front: raise Exception('Queue is full') if self.front == -1: self.front = 0 self.rear = (self.rear + 1) % self.size self.queue[self.rear] = item def dequeue(self): if self.front == -1: raise Exception('Queue is empty') item = self.queue[self.front] if self.front == self.rear: self.front = self.rear = -1 else: self.front = (self.front + 1) % self.size return item",Useful
+This function calculates the nth Fibonacci number using an iterative approach and stores previously computed values.,"const fibonacci = (n) => { const fib = [0, 1]; for (let i = 2; i <= n; i++) { fib[i] = fib[i - 1] + fib[i - 2]; } return fib[n]; };",Useful
+This function performs a binary search on a sorted array to find the index of a target value.,"def binary_search(arr, target): low, high = 0, len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] < target: low = mid + 1 elif arr[mid] > target: high = mid - 1 else: return mid return -1",Useful
+"This class implements an AVL tree, a self-balancing binary search tree, with methods to insert nodes and maintain balance.","class AVLTree: def __init__(self): self.root = None def insert(self, key): self.root = self._insert(self.root, key) def _insert(self, node, key): if not node: return Node(key) if key < node.key: node.left = self._insert(node.left, key) else: node.right = self._insert(node.right, key) return self._balance(node)",Useful
+"This function limits the rate at which a function can be called, ensuring it doesn't exceed the specified limit.","function throttle(func, limit) { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan) { func.apply(context, args); lastRan = Date.now(); } else { clearTimeout(lastFunc); lastFunc = setTimeout(() => { if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } }, limit - (Date.now() - lastRan)); } }; }",Useful
+This function merges two sorted lists into a single sorted list by iterating through both lists simultaneously.,"def merge_sorted_lists(list1, list2): merged = [] i, j = 0, 0 while i < len(list1) and j < len(list2): if list1[i] < list2[j]: merged.append(list1[i]) i += 1 else: merged.append(list2[j]) j += 1 merged.extend(list1[i:]) merged.extend(list2[j:]) return merged",Useful
+This class implements a max heap with methods to insert elements and maintain the heap property.,"class MaxHeap: def __init__(self): self.heap = [] def insert(self, val): self.heap.append(val) self._heapify_up(len(self.heap) - 1) def _heapify_up(self, index): while index > 0: parent = (index - 1) // 2 if self.heap[parent] < self.heap[index]: self.heap[parent], self.heap[index] = self.heap[index], self.heap[parent] index = parent else: break",Useful
+This function checks if a given string is a palindrome by comparing it with its reversed version.,function isPalindrome(str) { const reversed = str.split('').reverse().join(''); return str === reversed; },Useful
+This function generates the power set of a given set using recursion to build all possible subsets.,def power_set(s): if not s: return [[]] res = power_set(s[:-1]) return res + [r + [s[-1]] for r in res],Useful
+This function finds all start indices of anagrams of a given string within another string using character counting.,"const findAnagrams = (s, p) => { const result = []; const pCount = Array(26).fill(0); for (let char of p) { pCount[char.charCodeAt(0) - 'a'.charCodeAt(0)]++; } for (let i = 0; i < s.length - p.length + 1; i++) { const sCount = Array(26).fill(0); for (let j = 0; j < p.length; j++) { sCount[s[i + j].charCodeAt(0) - 'a'.charCodeAt(0)]++; } if (JSON.stringify(sCount) === JSON.stringify(pCount)) result.push(i); } return result; };",Useful
+"This code defines a trie data structure for efficient word storage and retrieval, allowing for prefix-based searches.","class TrieNode: def __init__(self): self.children = {} self.is_end_of_word = False class Trie: def __init__(self): self.root = TrieNode() def insert(self, word): node = self.root for char in word: if char not in node.children: node.children[char] = TrieNode() node = node.children[char] node.is_end_of_word = True",Useful
+This function recursively flattens a nested array into a single-level array using reduce.,"function flattenArray(arr) { return arr.reduce((flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten), []); }",Useful
+This function implements Dijkstra's algorithm to find the shortest paths from a starting node to all other nodes in a weighted graph.,"def dijkstra(graph, start): shortest_paths = {node: float('infinity') for node in graph} shortest_paths[start] = 0 priority_queue = [(0, start)] while priority_queue: current_distance, current_node = heapq.heappop(priority_queue) for neighbor, weight in graph[current_node].items(): distance = current_distance + weight if distance < shortest_paths[neighbor]: shortest_paths[neighbor] = distance heapq.heappush(priority_queue, (distance, neighbor)) return shortest_paths",Useful
+This class implements a segment tree for efficient range queries and updates over an array.,"class SegmentTree: def __init__(self, data): self.n = len(data) self.tree = [0] * (2 * self.n) self.build(data) def build(self, data): for i in range(self.n): self.tree[self.n + i] = data[i] for i in range(self.n - 1, 0, -1): self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]",Useful
+This function rotates a square matrix 90 degrees clockwise in place.,function rotateMatrix(matrix) { let n = matrix.length; for (let layer = 0; layer < n / 2; layer++) { let first = layer; let last = n - 1 - layer; for (let i = first; i < last; i++) { let offset = i - first; let top = matrix[first][i]; matrix[first][i] = matrix[last - offset][first]; matrix[last - offset][first] = matrix[last][last - offset]; matrix[last][last - offset] = matrix[i][last]; matrix[i][last] = top; } } return matrix; },Useful
+This function checks if a string has balanced parentheses using a stack to track opening and closing brackets.,def is_balanced_parentheses(s): stack = [] for char in s: if char == '(': stack.append(char) elif char == ')': if not stack: return False stack.pop() return not stack,Useful
+This class implements a singly linked list with methods to insert new nodes and display the list.,"class LinkedList: class Node: def __init__(self, data): self.data = data self.next = None def __init__(self): self.head = None def insert(self, data): new_node = self.Node(data) new_node.next = self.head self.head = new_node def display(self): current = self.head while current: print(current.data) current = current.next",Useful
+This function finds two indices in an array that add up to a specified target using a hash map for fast lookups.,"const twoSum = (nums, target) => { const map = new Map(); for (let i = 0; i < nums.length; i++) { const complement = target - nums[i]; if (map.has(complement)) { return [map.get(complement), i]; } map.set(nums[i], i); } return []; };",Useful
+This function finds all combinations of numbers that sum up to a target value using backtracking.,"def combination_sum(candidates, target): def backtrack(start, target, path): if target == 0: res.append(path) return if target < 0: return for i in range(start, len(candidates)): backtrack(i, target - candidates[i], path + [candidates[i]]) res = [] backtrack(0, target, []) return res",Useful
+This class implements an LRU (Least Recently Used) cache that supports get and put operations with a fixed capacity.,"class LRUCache: def __init__(self, capacity: int): self.cache = {} self.capacity = capacity self.order = [] def get(self, key: int) -> int: if key not in self.cache: return -1 self.order.remove(key) self.order.append(key) return self.cache[key] def put(self, key: int, value: int) -> None: if key in self.cache: self.order.remove(key) else: if len(self.cache) >= self.capacity: lru = self.order.pop(0) del self.cache[lru] self.cache[key] = value self.order.append(key)",Useful
+This function calculates the largest rectangle area in a histogram using a stack to track indices.,"def largest_rectangle_area(heights): stack, max_area = [], 0 for i, h in enumerate(heights): while stack and heights[stack[-1]] > h: height = heights[stack.pop()] width = i if not stack else i - stack[-1] - 1 max_area = max(max_area, height * width) stack.append(i) while stack: height = heights[stack.pop()] width = len(heights) if not stack else len(heights) - stack[-1] - 1 max_area = max(max_area, height * width) return max_area",Useful
+This function finds the maximum sum of a contiguous subarray using Kadane's algorithm.,"const maxSubArray = (nums) => { let max = nums[0], currentMax = nums[0]; for (let i = 1; i < nums.length; i++) { currentMax = Math.max(nums[i], currentMax + nums[i]); max = Math.max(max, currentMax); } return max; };",Useful
+This function finds the median of two sorted arrays using a binary search approach for efficiency.,"def findMedianSortedArrays(nums1, nums2): def get_kth(k): i, j = 0, 0 while True: if i == len(nums1): return nums2[j + k - 1] if j == len(nums2): return nums1[i + k - 1] if k == 1: return min(nums1[i], nums2[j]) mid1, mid2 = (i + k // 2 - 1), (j + k // 2 - 1) val1 = nums1[mid1] if mid1 < len(nums1) else float('inf') val2 = nums2[mid2] if mid2 < len(nums2) else float('inf') if val1 < val2: i += k // 2 else: j += k // 2 k -= k // 2 return get_kth((len(nums1) + len(nums2) + 1) // 2)",Useful
+This class generates all permutations of a list of numbers using backtracking.,"class Permutation: def __init__(self): self.permutations = [] def permute(self, nums): self._backtrack(nums, []) return self.permutations def _backtrack(self, nums, path): if not nums: self.permutations.append(path) for i in range(len(nums)): self._backtrack(nums[:i] + nums[i+1:], path + [nums[i]])",Useful
+This function checks if two strings are anagrams by counting character occurrences in both strings.,"const isAnagram = (s, t) => { if (s.length !== t.length) return false; const count = {}; for (let char of s) { count[char] = (count[char] || 0) + 1; } for (let char of t) { if (!count[char]) return false; count[char]--; } return true; };",Useful
+This function generates all combinations of well-formed parentheses for a given number of pairs using backtracking.,"def generate_parentheses(n): def backtrack(s='', left=0, right=0): if len(s) == 2 * n: res.append(s) return if left < n: backtrack(s + '(', left + 1, right) if right < left: backtrack(s + ')', left, right + 1) res = [] backtrack() return res",Useful
+This function generates a Fibonacci sequence up to n terms.,"def fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0, 1]
+    else:
+        fib_seq = [0, 1]
+        for i in range(2, n):
+            fib_seq.append(fib_seq[-1] + fib_seq[-2])
+        return fib_seq",Useful
+This class defines a binary tree structure.,"class Node:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.value = key
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        if self.root is None:
+            self.root = Node(key)
+        else:
+            self._insert_recursively(self.root, key)
+
+    def _insert_recursively(self, current_node, key):
+        if key < current_node.value:
+            if current_node.left is None:
+                current_node.left = Node(key)
+            else:
+                self._insert_recursively(current_node.left, key)
+        else:
+            if current_node.right is None:
+                current_node.right = Node(key)
+            else:
+                self._insert_recursively(current_node.right, key)",Useful
+This function sorts an array using the merge sort algorithm.,"def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1",Useful
+This function performs the quicksort algorithm on an array.,"function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    const pivot = arr[arr.length - 1];
+    const left = [];
+    const right = [];
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i]);
+        } else {
+            right.push(arr[i]);
+        }
+    }
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}",Useful
+This function implements binary search for a sorted array.,"pub fn binary_search<T: Ord>(arr: &[T], target: T) -> Option<usize> {
+    let mut left = 0;
+    let mut right = arr.len();
+
+    while left < right {
+        let mid = left + (right - left) / 2;
+        if arr[mid] == target {
+            return Some(mid);
+        } else if arr[mid] < target {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    None
+}",Useful
+This class represents a directed graph and implements depth-first search.,"class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u not in self.graph:
+            self.graph[u] = []
+        self.graph[u].append(v)
+
+    def dfs(self, start):
+        visited = set()
+        self._dfs_helper(start, visited)
+
+    def _dfs_helper(self, node, visited):
+        if node not in visited:
+            print(node)
+            visited.add(node)
+            for neighbor in self.graph.get(node, []):
+                self._dfs_helper(neighbor, visited)",Useful
+This function counts the frequency of each word in a given text.,"def count_words(text):
+    words = text.split()
+    word_count = {}
+    for word in words:
+        word = word.lower()
+        if word in word_count:
+            word_count[word] += 1
+        else:
+            word_count[word] = 1
+    return word_count",Useful
+This function creates a debounced version of a function.,"function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+}",Useful
+This function calculates the factorial of a number recursively.,"fn factorial(n: u64) -> u64 {
+    if n == 0 {
+        1
+    } else {
+        n * factorial(n - 1)
+    }
+}",Useful
+This function checks if a number is prime.,"def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True",Useful
+This function merges two sorted arrays into one sorted array.,"function merge(arr1, arr2) {
+    let merged = [];
+    let i = 0, j = 0;
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] < arr2[j]) {
+            merged.push(arr1[i++]);
+        } else {
+            merged.push(arr2[j++]);
+        }
+    }
+    return merged.concat(arr1.slice(i)).concat(arr2.slice(j));
+}",Useful
+This struct represents a point in 2D space and includes a method to calculate the distance to another point.,"pub struct Point {
+    x: f64,
+    y: f64,
+}
+
+impl Point {
+    pub fn new(x: f64, y: f64) -> Point {
+        Point { x, y }
+    }
+
+    pub fn distance(&self, other: &Point) -> f64 {
+        let dx = self.x - other.x;
+        let dy = self.y - other.y;
+        (dx * dx + dy * dy).sqrt()
+    }
+}",Useful
+This class implements a stack data structure with basic operations.,"class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop() if not self.is_empty() else None
+
+    def is_empty(self):
+        return len(self.items) == 0",Useful
+This function limits the rate at which a function can be executed.,"function throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function() {
+        const context = this;
+        const args = arguments;
+        if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+        } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function() {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, limit - (Date.now() - lastRan));
+        }
+    };
+}",Useful
+This function calculates the area of a circle given its radius.,"def calculate_area_of_circle(radius):
+    return 3.14159 * (radius ** 2)",Useful
+This function finds the longest common prefix string among an array of strings.,"pub fn longest_common_prefix(strs: Vec<&str>) -> String {
+    if strs.is_empty() { return String::new(); }
+    let mut prefix = strs[0].to_string();
+    for s in &strs[1..] {
+        while !s.starts_with(&prefix) {
+            prefix.pop();
+        }
+    }
+    prefix
+}",Useful
+This class implements a queue data structure with basic operations.,"class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        return self.items.pop() if not self.is_empty() else None
+
+    def is_empty(self):
+        return len(self.items) == 0",Useful
+This function flattens a nested list into a single list.,"def flatten_list(nested_list):
+    flat_list = []
+    for sublist in nested_list:
+        if isinstance(sublist, list):
+            flat_list.extend(flatten_list(sublist))
+        else:
+            flat_list.append(sublist)
+    return flat_list",Useful
+"This function sorts an array using the merge sort algorithm, implemented in Rust.","fn merge_sort(arr: &mut [i32]) {
+    let len = arr.len();
+    if len < 2 {
+        return;
+    }
+    let mid = len / 2;
+    merge_sort(&mut arr[..mid]);
+    merge_sort(&mut arr[mid..]);
+    let mut merged = Vec::new();
+    let (mut left, mut right) = (0, mid);
+    while left < mid && right < len {
+        if arr[left] < arr[right] {
+            merged.push(arr[left]);
+            left += 1;
+        } else {
+            merged.push(arr[right]);
+            right += 1;
+        }
+    }
+    while left < mid {
+        merged.push(arr[left]);
+        left += 1;
+    }
+    while right < len {
+        merged.push(arr[right]);
+        right += 1;
+    }
+    arr.copy_from_slice(&merged);
+}",Useful
+This function calculates the height of a binary tree.,"def binary_tree_height(node):
+    if not node:
+        return -1
+    left_height = binary_tree_height(node.left)
+    right_height = binary_tree_height(node.right)
+    return max(left_height, right_height) + 1",Useful
+This function computes the factorial of a number using recursion.,"function factorial(n) {
+    if (n === 0) return 1;
+    return n * factorial(n - 1);
+}",Useful
+This function checks if a string is a palindrome.,"pub fn is_palindrome(s: &str) -> bool {
+    let s = s.chars().collect::<Vec<_>>();
+    let len = s.len();
+    for i in 0..len / 2 {
+        if s[i] != s[len - 1 - i] {
+            return false;
+        }
+    }
+    true
+}",Useful
+This function reverses a given string.,"def reverse_string(s):
+    return s[::-1]",Useful
+This function computes the nth Fibonacci number using recursion.,"pub fn fibonacci(n: u64) -> u64 {
+    if n <= 1 {
+        return n;
+    }
+    fibonacci(n - 1) + fibonacci(n - 2)
+}",Useful
+This function groups words that are anagrams of each other.,"def group_anagrams(words):
+    anagrams = {}
+    for word in words:
+        sorted_word = ''.join(sorted(word))
+        anagrams.setdefault(sorted_word, []).append(word)
+    return list(anagrams.values())",Useful
+This function generates a random integer between min and max.,"function random_integer(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}",Useful
+This function calculates the sum of squares of numbers from 1 to n.,"pub fn sum_of_squares(n: u64) -> u64 {
+    (1..=n).map(|x| x * x).sum()
+}",Useful
+This function returns the prime factors of a given number.,"def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors",Useful
+This function returns an array with unique elements from the input array.,"function unique_elements(arr) {
+    return [...new Set(arr)];
+}",Useful
+This function counts the number of vowels in a string.,"pub fn count_vowels(s: &str) -> usize {
+    s.chars().filter(|&c| ""aeiouAEIOU"".contains(c)).count()
+}",Useful
+This function finds the character with the maximum occurrence in a string.,"def get_max_occurrence(string):
+    count = {}
+    for char in string:
+        count[char] = count.get(char, 0) + 1
+    return max(count, key=count.get)",Useful
+This function removes duplicate items from an array.,"function remove_duplicates(arr) {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+}",Useful
+This function calculates the greatest common divisor of two numbers using recursion.,"pub fn gcd(a: u64, b: u64) -> u64 {
+    if b == 0 {
+        return a;
+    }
+    gcd(b, a % b)
+}",Useful
+This function finds the length of the longest substring without repeating characters.,"def longest_substring_without_repeating(s):
+    start = max_length = 0
+    used_chars = {}
+    for index, char in enumerate(s):
+        if char in used_chars and used_chars[char] >= start:
+            start = used_chars[char] + 1
+        used_chars[char] = index
+        max_length = max(max_length, index - start + 1)
+    return max_length",Useful
+This function returns indices of the two numbers such that they add up to a specific target.,"pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut map = HashMap::new();
+    for (i, &num) in nums.iter().enumerate() {
+        if let Some(&j) = map.get(&(target - num)) {
+            return vec![j, i as i32];
+        }
+        map.insert(num, i);
+    }
+    vec![]
+}",Useful
+"This function implements the merge sort algorithm, which is a divide-and-conquer sorting technique that recursively splits the array into halves and merges them back in sorted order.",def merge_sort(arr): if len(arr) > 1: mid = len(arr) // 2 left_half = arr[:mid] right_half = arr[mid:] merge_sort(left_half) merge_sort(right_half) i = j = k = 0 while i < len(left_half) and j < len(right_half): if left_half[i] < right_half[j]: arr[k] = left_half[i] i += 1 else: arr[k] = right_half[j] j += 1 k += 1 while i < len(left_half): arr[k] = left_half[i] i += 1 k += 1 while j < len(right_half): arr[k] = right_half[j] j += 1 k += 1,Useful
+This class does something with graphs.,"class Graph: def __init__(self): self.graph = {} def add_edge(self, v, w): if v not in self.graph: self.graph[v] = [] self.graph[v].append(w)",Not Useful
+This is a sorting algorithm.,"const quickSort = (arr) => { if (arr.length <= 1) return arr; const pivot = arr[arr.length - 1]; const left = []; const right = []; for (let i = 0; i < arr.length - 1; i++) { if (arr[i] < pivot) left.push(arr[i]); else right.push(arr[i]); } return [...quickSort(left), pivot, ...quickSort(right)]; };",Not Useful
+Calculates Fibonacci numbers.,fn fibonacci(n: u32) -> u32 { if n <= 1 { return n; } fibonacci(n - 1) + fibonacci(n - 2) },Not Useful
+Returns the average.,def calculate_average(grades): total = sum(grades) count = len(grades) return total / count if count > 0 else 0,Not Useful
+This class represents a binary tree and provides methods to insert values into the tree.,"class BinaryTree: def __init__(self): self.root = None def insert(self, value): if self.root is None: self.root = Node(value) else: self._insert_recursively(self.root, value) def _insert_recursively(self, node, value): if value < node.value: if node.left is None: node.left = Node(value) else: self._insert_recursively(node.left, value) else: if node.right is None: node.right = Node(value) else: self._insert_recursively(node.right, value)",Useful
+This function is used for debouncing.,"function debounce(func, delay) { let timer; return function(...args) { const context = this; clearTimeout(timer); timer = setTimeout(() => func.apply(context, args), delay); }; }",Not Useful
+This function implements merge sort generically for any type that implements the Ord trait.,"pub fn merge_sort<T: Ord>(array: &mut [T]) { let len = array.len(); if len < 2 { return; } let mid = len / 2; merge_sort(&mut array[..mid]); merge_sort(&mut array[mid..]); let mut temp = Vec::with_capacity(len); let (mut left, mut right) = (0, mid); while left < mid && right < len { if array[left] <= array[right] { temp.push(array[left]); left += 1; } else { temp.push(array[right]); right += 1; } } temp.extend_from_slice(&array[left..mid]); temp.extend_from_slice(&array[right..]); array.copy_from_slice(&temp); }",Useful
+Solves the knapsack problem using dynamic programming.,"def knapsack(weights, values, capacity): n = len(values) K = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)] for i in range(n + 1): for w in range(capacity + 1): if i == 0 or w == 0: K[i][w] = 0 elif weights[i - 1] <= w: K[i][w] = max(values[i - 1] + K[i - 1][w - weights[i - 1]], K[i - 1][w]) else: K[i][w] = K[i - 1][w] return K[n][capacity]",Useful
+Checks if a string is a palindrome.,const isPalindrome = (str) => { const reversed = str.split('').reverse().join(''); return str === reversed; };,Useful
+This class is a basic linked list implementation.,"class LinkedList: def __init__(self): self.head = None def append(self, data): new_node = Node(data) if not self.head: self.head = new_node return current = self.head while current.next: current = current.next current.next = new_node",Useful
+Calculates the greatest common divisor of two numbers.,"fn gcd(a: u64, b: u64) -> u64 { if b == 0 { a } else { gcd(b, a % b) } }",Useful
+Implements Dijkstra's algorithm to find the shortest path in a weighted graph.,"def dijkstra(graph, start): shortest_distance = {node: float('infinity') for node in graph} shortest_distance[start] = 0 priority_queue = [(0, start)] while priority_queue: current_distance, current_node = heapq.heappop(priority_queue) for neighbor, weight in graph[current_node].items(): distance = current_distance + weight if distance < shortest_distance[neighbor]: shortest_distance[neighbor] = distance heapq.heappush(priority_queue, (distance, neighbor)) return shortest_distance",Useful
+This class is a stack implementation.,public class MyStack { private LinkedList<Integer> list = new LinkedList<>(); public void push(int value) { list.addFirst(value); } public int pop() { return list.removeFirst(); } public boolean isEmpty() { return list.isEmpty(); } },Useful
+Flattens a nested array.,"function flatten(arr) { return arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val), []); }",Useful
+Generates all permutations of a list of numbers.,def permutations(nums): if len(nums) == 0: return [[]] res = [] for i in range(len(nums)): for p in permutations(nums[:i] + nums[i + 1:]): res.append([nums[i]] + p) return res,Useful
+Performs a binary search on a sorted array.,"fn binary_search<T: Ord>(arr: &[T], target: T) -> Option<usize> { let mut left = 0; let mut right = arr.len(); while left < right { let mid = left + (right - left) / 2; if arr[mid] == target { return Some(mid); } else if arr[mid] < target { left = mid + 1; } else { right = mid; } } None }",Useful
+This class implements a min-heap data structure.,"class MinHeap: def __init__(self): self.heap = [] def insert(self, key): self.heap.append(key) self._heapify_up(len(self.heap) - 1) def _heapify_up(self, index): parent_index = (index - 1) // 2 if index > 0 and self.heap[index] < self.heap[parent_index]: self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index] self._heapify_up(parent_index)",Useful
+Calculates the factorial of a number recursively.,function calculateFactorial(n) { if (n === 0 || n === 1) return 1; return n * calculateFactorial(n - 1); },Useful
+This function checks if two strings are anagrams.,"def is_anagram(str1, str2): return sorted(str1) == sorted(str2)",Useful
+This class implements a basic queue.,"class Queue: def __init__(self): self.items = [] def enqueue(self, item): self.items.append(item) def dequeue(self): return self.items.pop(0)",Useful
+Generates a list of prime numbers up to n using the Sieve of Eratosthenes.,"fn prime_sieve(n: usize) -> Vec<usize> { let mut primes = vec![true; n + 1]; primes[0] = false; primes[1] = false; for p in 2..=((n as f64).sqrt() as usize) { if primes[p] { for multiple in (p*p..=n).step_by(p) { primes[multiple] = false; } } } primes.into_iter().enumerate().filter_map(|(i, &is_prime)| if is_prime { Some(i) } else { None }).collect() }",Useful
+Implements the breadth-first search algorithm for traversing a graph.,"def bfs(graph, start): visited = set() queue = [start] while queue: vertex = queue.pop(0) if vertex not in visited: visited.add(vertex) neighbors = graph[vertex] for neighbor in neighbors: queue.append(neighbor) return visited",Useful
+Merges two sorted arrays into one sorted array.,"const mergeSortedArrays = (arr1, arr2) => { let merged = []; let i = 0, j = 0; while (i < arr1.length && j < arr2.length) { if (arr1[i] < arr2[j]) { merged.push(arr1[i++]); } else { merged.push(arr2[j++]); } } return merged.concat(arr1.slice(i)).concat(arr2.slice(j)); };",Useful
+This class implements a Trie data structure for efficient storage and retrieval of strings.,"class TrieNode: def __init__(self): self.children = {} self.is_end_of_word = False class Trie: def __init__(self): self.root = TrieNode() def insert(self, word): node = self.root for char in word: if char not in node.children: node.children[char] = TrieNode() node = node.children[char] node.is_end_of_word = True",Useful
+Rotates an array to the right by k steps.,"function rotateArray(arr, k) { const n = arr.length; k = k % n; const rotated = arr.slice(n - k).concat(arr.slice(0, n - k)); return rotated; }",Useful
+Computes the length of the longest common subsequence between two strings.,"def longest_common_subsequence(str1, str2): m, n = len(str1), len(str2) dp = [[0] * (n + 1) for _ in range(m + 1)] for i in range(1, m + 1): for j in range(1, n + 1): if str1[i - 1] == str2[j - 1]: dp[i][j] = dp[i - 1][j - 1] + 1 else: dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) return dp[m][n]",Useful
+Calculates the factorial using recursion.,fn factorial(n: u64) -> u64 { if n <= 1 { 1 } else { n * factorial(n - 1) } },Useful
+This class implements a segment tree for range query problems.,"class SegmentTree: def __init__(self, data): self.n = len(data) self.tree = [0] * (2 * self.n) for i in range(self.n): self.tree[self.n + i] = data[i] for i in range(self.n - 1, 0, -1): self.tree[i] = self.tree[i << 1] + self.tree[i << 1 | 1]",Useful
+Shuffles an array randomly.,"function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }",Useful
+Counts the number of inversions in an array using merge sort.,"def count_inversions(arr): def merge_count_split_inv(arr, temp_arr, left, mid, right): i = left    j = mid    k = left    inv_count = 0 while i <= mid - 1 and j <= right: if arr[i] <= arr[j]: temp_arr[k] = arr[i] i += 1 else: temp_arr[k] = arr[j] inv_count += (mid - i) j += 1 k += 1 while i <= mid - 1: temp_arr[k] = arr[i] i += 1 k += 1 while j <= right: temp_arr[k] = arr[j] j += 1 k += 1 for i in range(left, right + 1): arr[i] = temp_arr[i] return inv_count",Useful
+Sorts an array using the bubble sort algorithm.,"pub fn bubble_sort(arr: &mut [i32]) { let n = arr.len(); for i in 0..n { for j in 0..n - 1 - i { if arr[j] > arr[j + 1] { arr.swap(j, j + 1); } } } }",Useful
+Generates the first n Fibonacci numbers.,"function getFibonacci(n) { let a = 0, b = 1; const result = []; for (let i = 0; i < n; i++) { result.push(a); [a, b] = [b, a + b]; } return result; }",Useful
+Finds the top k most frequent elements in a list.,"def top_k_frequent(nums, k): count = collections.Counter(nums) return [item for item, freq in count.most_common(k)]",Useful
+This class implements a Least Recently Used (LRU) cache.,"class LRUCache: def __init__(self, capacity: int): self.cache = {} self.capacity = capacity self.order = [] def get(self, key: int) -> int: if key in self.cache: self.order.remove(key) self.order.append(key) return self.cache[key] return -1 def put(self, key: int, value: int) -> None: if key in self.cache: self.order.remove(key) else: if len(self.order) >= self.capacity: oldest = self.order.pop(0) del self.cache[oldest] self.cache[key] = value self.order.append(key)",Useful
+"This function implements the merge sort algorithm, which is a recursive sorting technique that divides the input array into halves.",def merge_sort(arr): if len(arr) > 1: mid = len(arr) // 2 left_half = arr[:mid] right_half = arr[mid:] merge_sort(left_half) merge_sort(right_half) i = j = k = 0 while i < len(left_half) and j < len(right_half): if left_half[i] < right_half[j]: arr[k] = left_half[i] i += 1 else: arr[k] = right_half[j] j += 1 k += 1 while i < len(left_half): arr[k] = left_half[i] i += 1 k += 1 while j < len(right_half): arr[k] = right_half[j] j += 1 k += 1,Useful
+This function calculates a number in the Fibonacci sequence.,function fibonacci(n) { if (n <= 1) return n; return fibonacci(n - 1) + fibonacci(n - 2); },Not Useful
+This class represents a node in a binary tree.,"class Node: def __init__(self, key): self.left = None self.right = None self.val = key def insert(root, key): if root is None: return Node(key) else: if root.val < key: root.right = insert(root.right, key) else: root.left = insert(root.left, key) return root",Not Useful
+This struct defines a point in a 2D space and includes a method to calculate the distance to another point.,"pub struct Point { x: f64, y: f64 } impl Point { pub fn distance(&self, other: &Point) -> f64 { ((self.x - other.x).powi(2) + (self.y - other.y).powi(2)).sqrt() } }",Useful
+This class is designed to represent a graph using adjacency lists.,"class Graph: def __init__(self): self.graph = {} def add_edge(self, u, v): if u in self.graph: self.graph[u].append(v) else: self.graph[u] = [v]",Useful
+"This function sorts an array using the quicksort algorithm, which is a divide-and-conquer approach.",def quicksort(arr): if len(arr) <= 1: return arr pivot = arr[len(arr) // 2] left = [x for x in arr if x < pivot] middle = [x for x in arr if x == pivot] right = [x for x in arr if x > pivot] return quicksort(left) + middle + quicksort(right),Useful
+This function calculates the factorial of a number using Rust's range and product methods.,fn factorial(n: u64) -> u64 { (1..=n).product() },Useful
+This function implements the binary search algorithm to find the index of a target value in a sorted array.,"def binary_search(arr, target): low = 0 high = len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] < target: low = mid + 1 elif arr[mid] > target: high = mid - 1 else: return mid return -1",Useful
+This function checks if a given string is a palindrome.,function isPalindrome(str) { return str === str.split('').reverse().join(''); },Not Useful
+This function retrieves data from a given URL and returns it as a JSON object.,async function fetchData(url) { const response = await fetch(url); const data = await response.json(); return data; },Useful
+This class implements a basic stack data structure with push and pop operations.,"class Stack: def __init__(self): self.items = [] def push(self, item): self.items.append(item) def pop(self): return self.items.pop() if not self.is_empty() else 'Stack is empty' def is_empty(self): return len(self.items) == 0",Useful
+This function counts the number of vowels in a given string.,def count_vowels(s): return sum(1 for char in s if char.lower() in 'aeiou'),Useful
+This struct represents a rectangle and provides a method to calculate its area.,"struct Rectangle { width: f64, height: f64 } impl Rectangle { pub fn area(&self) -> f64 { self.width * self.height } }",Useful
+This function implements Dijkstra's algorithm for finding the shortest paths in a weighted graph.,"def dijkstra(graph, start): shortest_path = {vertex: float('infinity') for vertex in graph} shortest_path[start] = 0 priority_queue = [(0, start)] while priority_queue: current_distance, current_vertex = heapq.heappop(priority_queue) for neighbor, weight in graph[current_vertex].items(): distance = current_distance + weight if distance < shortest_path[neighbor]: shortest_path[neighbor] = distance heapq.heappush(priority_queue, (distance, neighbor)) return shortest_path",Useful
+This function merges two arrays and removes duplicates.,"function mergeArrays(arr1, arr2) { return [...new Set([...arr1, ...arr2])]; }",Useful
+This function calculates the coefficients of a simple linear regression model.,"def linear_regression(x, y): n = len(x) m_x, m_y = sum(x) / n, sum(y) / n SS_xy = sum(y[i] * x[i] for i in range(n)) - n * m_y * m_x SS_xx = sum(x[i] * x[i] for i in range(n)) - n * m_x * m_x b_1 = SS_xy / SS_xx b_0 = m_y - b_1 * m_x return b_0, b_1",Useful
+This class implements a binary tree with an insert method.,"class BinaryTree: def __init__(self, root): self.root = root self.left = None self.right = None def insert(self, value): if self.root: if value < self.root: if self.left is None: self.left = BinaryTree(value) else: self.left.insert(value) else: if self.right is None: self.right = BinaryTree(value) else: self.right.insert(value)",Useful
+This function checks if a string has all unique characters using a HashSet.,fn unique_characters(s: &str) -> bool { let mut chars = std::collections::HashSet::new(); for c in s.chars() { if !chars.insert(c) { return false; } } true },Useful
+This function solves the 0/1 knapsack problem using dynamic programming.,"def knapsack(weights, values, capacity): n = len(values) dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)] for i in range(n + 1): for w in range(capacity + 1): if i == 0 or w == 0: dp[i][w] = 0 elif weights[i-1] <= w: dp[i][w] = max(values[i-1] + dp[i-1][w - weights[i-1]], dp[i-1][w]) else: dp[i][w] = dp[i-1][w] return dp[n][capacity]",Useful
+This function creates a debounced version of a function that delays its execution.,"function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { timeout = null; func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; };",Useful
+This function performs a breadth-first search on a graph starting from a specified vertex.,"def bfs(graph, start): visited = set() queue = [start] while queue: vertex = queue.pop(0) if vertex not in visited: visited.add(vertex) queue.extend(set(graph[vertex]) - visited) return visited",Useful
+This class implements a basic queue data structure with enqueue and dequeue operations.,"class Queue: def __init__(self): self.items = [] def enqueue(self, item): self.items.insert(0, item) def dequeue(self): return self.items.pop() if not self.is_empty() else 'Queue is empty' def is_empty(self): return len(self.items) == 0",Useful
+This function rotates a square matrix 90 degrees clockwise.,"def rotate_matrix(matrix): n = len(matrix) for i in range(n): for j in range(i, n): matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j] for i in range(n): matrix[i].reverse() return matrix",Useful
+This function calculates the greatest common divisor using recursion.,"fn gcd(a: u64, b: u64) -> u64 { if b == 0 { a } else { gcd(b, a % b) } }",Useful
+This class implements a simple counter with increment and get methods.,class Counter: def __init__(self): self.count = 0 def increment(self): self.count += 1 def get_count(self): return self.count,Useful
+This function flattens a nested array into a single array.,"function flattenArray(arr) { return arr.reduce((flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten), []); }",Useful
+This function generates all possible permutations of a list of numbers.,def permute(nums): if len(nums) == 0: return [[]] return [[nums[i]] + p for i in range(len(nums)) for p in permute(nums[:i] + nums[i+1:])],Useful
+This class implements a min-heap data structure with insert functionality.,"class MinHeap: def __init__(self): self.heap = [] def parent(self, i): return (i - 1) // 2 def left(self, i): return 2 * i + 1 def right(self, i): return 2 * i + 2 def insert(self, key): self.heap.append(key) i = len(self.heap) - 1 while i != 0 and self.heap[self.parent(i)] > self.heap[i]: self.heap[self.parent(i)], self.heap[i] = self.heap[i], self.heap[self.parent(i)] i = self.parent(i)",Useful
+This function checks if two strings are anagrams of each other.,"def is_anagram(str1, str2): return sorted(str1) == sorted(str2)",Not Useful
+This function performs binary search on a sorted array.,"fn binary_search(arr: &[i32], target: i32) -> Option<usize> { let mut low = 0; let mut high = arr.len() as isize - 1; while low <= high { let mid = (low + high) / 2; if arr[mid as usize] == target { return Some(mid as usize); } else if arr[mid as usize] < target { low = mid + 1; } else { high = mid - 1; } } None }",Useful
+This function sorts an array using the selection sort algorithm.,"def selection_sort(arr): for i in range(len(arr)): min_idx = i for j in range(i+1, len(arr)): if arr[j] < arr[min_idx]: min_idx = j arr[i], arr[min_idx] = arr[min_idx], arr[i]",Not Useful
+This function creates a delay for a specified number of milliseconds.,"async function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }",Useful
+This function finds the length of the longest common subsequence between two strings using dynamic programming.,"def lcs(X, Y): m = len(X) n = len(Y) L = [[0] * (n + 1) for _ in range(m + 1)] for i in range(m + 1): for j in range(n + 1): if i == 0 or j == 0: L[i][j] = 0 elif X[i - 1] == Y[j - 1]: L[i][j] = L[i - 1][j - 1] + 1 else: L[i][j] = max(L[i - 1][j], L[i][j - 1]) return L[m][n]",Useful
+This is a class for an AVL Tree.,"class AVLTree: def __init__(self): self.root = None def insert(self, key): # code to insert and balance the AVL tree",Not Useful
+This function limits the rate at which a function can fire.,"function throttle(func, limit) { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan || (Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } } };",Useful
+"Applies a discount to a list of prices, ensuring that only positive prices are processed.","def apply_discount(prices, discount): return [price - (price * discount) for price in prices if price > 0]",Useful
+Combines two dictionaries into one.,"def merge_dicts(dict1, dict2): return {**dict1, **dict2}",Not Useful
+Limits the rate at which a function can fire.,"function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { timeout = null; if (args.length) func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; }; }",Useful
+Calculates the midpoint between two points.,"struct Point { int x; int y; }; Point midpoint(Point p1, Point p2) { return { (p1.x + p2.x) / 2, (p1.y + p2.y) / 2 }; }",Useful
+Fetches data from a URL and returns it as JSON.,const fetchData = async (url) => { const response = await fetch(url); return await response.json(); };,Not Useful
+Flattens a nested list into a single list.,def flatten(nested_list): return [item for sublist in nested_list for item in sublist],Useful
+Reverses a linked list.,class Node { public: int data; Node* next; }; Node* reverse(Node* head) { Node* prev = nullptr; while (head) { Node* next = head->next; head->next = prev; prev = head; head = next; } return prev; },Not Useful
+Ensures a function is called at most once in a specified time interval.,"const throttle = (func, limit) => { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan) { func.apply(context, args); lastRan = Date.now(); } else { clearTimeout(lastFunc); lastFunc = setTimeout(() => { if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } }, limit - (Date.now() - lastRan)); } }; };",Useful
+Checks if a string is a palindrome.,def is_palindrome(s): return s == s[::-1],Not Useful
+Finds all prime factors of a given number.,"def prime_factors(n): factors = [] for i in range(2, n + 1): while n % i == 0: factors.append(i) n //= i return factors",Useful
+Calculates the nth Fibonacci number using recursion.,"fn fibonacci(n: u32) -> u32 { match n { 0 => 0, 1 => 1, _ => fibonacci(n - 1) + fibonacci(n - 2) } }",Not Useful
+Generates a random UUID.,"const generateUUID = () => { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8); return v.toString(16); }); };",Useful
+This function sorts an array using the merge sort algorithm.,def merge_sort(arr): if len(arr) > 1: mid = len(arr) // 2 left_half = arr[:mid] right_half = arr[mid:] merge_sort(left_half) merge_sort(right_half) i = j = k = 0 while i < len(left_half) and j < len(right_half): if left_half[i] < right_half[j]: arr[k] = left_half[i] i += 1 else: arr[k] = right_half[j] j += 1 k += 1 while i < len(left_half): arr[k] = left_half[i] i += 1 k += 1 while j < len(right_half): arr[k] = right_half[j] j += 1 k += 1 return arr,Not Useful
+Implements a circular queue with enqueue and dequeue operations.,"class CircularQueue { private: int front, rear, size; int* queue; public: CircularQueue(int size) { this->size = size; front = rear = 0; queue = new int[size]; } void enqueue(int data) { queue[rear] = data; rear = (rear + 1) % size; } int dequeue() { int data = queue[front]; front = (front + 1) % size; return data; } };",Useful
+Counts how many times an element appears in an array.,"def count_occurrences(arr, x): return arr.count(x)",Not Useful
+"Creates a counter object with increment, decrement, and getCount methods.","const createCounter = () => { let count = 0; return { increment: () => { count++; return count; }, decrement: () => { count--; return count; }, getCount: () => count }; };",Useful
+Checks if two strings are anagrams of each other.,"fn is_anagram(s1: &str, s2: &str) -> bool { let mut s1_chars: Vec<_> = s1.chars().collect(); let mut s2_chars: Vec<_> = s2.chars().collect(); s1_chars.sort(); s2_chars.sort(); s1_chars == s2_chars }",Useful
+Calculates the area of a circle given its radius.,def calculate_area(radius): return 3.14 * radius ** 2,Not Useful
+Implements a stack data structure with push and pop functionality.,class Stack { private: std::vector<int> stack; public: void push(int value) { stack.push_back(value); } int pop() { int value = stack.back(); stack.pop_back(); return value; } bool isEmpty() { return stack.empty(); } };,Useful
+Filters out falsy values from an array.,function filterFalsy(arr) { return arr.filter(Boolean); },Not Useful
+Finds the length of the longest substring without repeating characters.,"def length_of_longest_substring(s): chars = set() left = result = 0 for right in range(len(s)): if s[right] in chars: while s[left] != s[right]: chars.remove(s[left]); left += 1 chars.add(s[right]) result = max(result, right - left + 1) return result",Useful
+Represents a graph using an adjacency list.,"class Graph { private: std::unordered_map<int, std::vector<int>> adjList; public: void addEdge(int v, int w) { adjList[v].push_back(w); } std::vector<int> getNeighbors(int v) { return adjList[v]; } };",Useful
+Rotates a matrix 90 degrees clockwise.,def rotate_matrix(matrix): return [list(row) for row in zip(*matrix[::-1])],Not Useful
+Sorts an array using the quicksort algorithm.,"const quickSort = (arr) => { if (arr.length <= 1) return arr; const pivot = arr[arr.length - 1]; const left = arr.filter(x => x < pivot); const right = arr.filter(x => x > pivot); return [...quickSort(left), pivot, ...quickSort(right)]; };",Not Useful
+Calculates the greatest common divisor of two numbers using recursion.,"fn gcd(a: i32, b: i32) -> i32 { if b == 0 { a } else { gcd(b, a % b) } }",Useful
+Performs a binary search on a sorted array.,"def binary_search(arr, target): left, right = 0, len(arr) - 1 while left <= right: mid = (left + right) // 2 if arr[mid] == target: return mid elif arr[mid] < target: left = mid + 1 else: right = mid - 1 return -1",Not Useful
+Limits the rate at which a function can be called.,"const debounce = (fn, delay) => { let timer; return function(...args) { const context = this; clearTimeout(timer); timer = setTimeout(() => fn.apply(context, args), delay); }; };",Useful
+Implements a priority queue using a heap.,"class PriorityQueue { private: std::vector<int> heap; public: void push(int value) { heap.push_back(value); std::push_heap(heap.begin(), heap.end()); } int pop() { std::pop_heap(heap.begin(), heap.end()); int value = heap.back(); heap.pop_back(); return value; } };",Useful
+Finds the missing number in a given array of integers.,def find_missing_number(arr): n = len(arr) + 1 total_sum = n * (n + 1) // 2 return total_sum - sum(arr),Useful
+Merges two arrays and removes duplicates.,"const mergeArrays = (arr1, arr2) => { return [...new Set([...arr1, ...arr2])]; };",Useful
+Solves the Tower of Hanoi problem using recursion.,"fn tower_of_hanoi(n: usize, source: &str, target: &str, auxiliary: &str) { if n == 1 { println!(""Move disk 1 from {} to {}"", source, target); return; } tower_of_hanoi(n - 1, source, auxiliary, target); println!(""Move disk {} from {} to {}"", n, source, target); tower_of_hanoi(n - 1, auxiliary, target, source); }",Useful
+Finds the longest common prefix string among an array of strings.,def longest_common_prefix(strs): if not strs: return '' prefix = strs[0] for s in strs[1:]: while s[:len(prefix)] != prefix and prefix: prefix = prefix[:-1] return prefix,Useful
+Implements an AVL tree with insertion logic.,"class AVLTree { private: struct Node { int key; Node* left; Node* right; int height; }; Node* insert(Node* node, int key) { // insert logic } };",Not Useful
+Groups anagrams together from a list of strings.,def group_anagrams(strs): from collections import defaultdict anagrams = defaultdict(list) for s in strs: anagrams[tuple(sorted(s))].append(s) return list(anagrams.values()),Useful
+Checks if a string is a palindrome.,const isPalindrome = (s) => { return s === s.split('').reverse().join(''); };,Not Useful
+"Merges two dictionaries, summing values for common keys.","def merge_dicts(dict1, dict2): return {k: dict1.get(k, 0) + dict2.get(k, 0) for k in set(dict1) | set(dict2)}",Useful
+Limits the rate at which a function can fire.,"function debounce(func, delay) { let timeout; return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), delay); }}",Useful
+Defines a simple Graph class and initializes an empty node collection.,class Graph { constructor() { this.nodes = {}; } addNode(node) { this.nodes[node] = []; } },Useful
+Calculates the factorial of a non-negative integer using recursion.,fn factorial(n: u32) -> u32 { if n == 0 { 1 } else { n * factorial(n - 1) } },Useful
+Returns a list of unique elements from the input list.,def unique_elements(lst): return list(set(lst)),Useful
+Fetches data from a URL and returns the parsed JSON response.,const fetchData = async (url) => { const response = await fetch(url); return response.json(); },Useful
+A simple stack implementation using templates in C++.,template <typename T> class Stack { private: std::vector<T> elements; public: void push(const T& element) { elements.push_back(element); } },Useful
+Flattens a list of lists into a single list.,def flatten(lst): return [item for sublist in lst for item in sublist],Useful
+Limits the number of times a function can be called in a given time frame.,"function throttle(func, limit) { let lastFunc; let lastRan; return function() { const context = this; const args = arguments; if (!lastRan) { func.apply(context, args); lastRan = Date.now(); } else { clearTimeout(lastFunc); lastFunc = setTimeout(function() { if ((Date.now() - lastRan) >= limit) { func.apply(context, args); lastRan = Date.now(); } }, limit - (Date.now() - lastRan)); } } }",Useful
+Defines a Node struct for a linked list and provides a method to add a new node.,"type Node struct { value int next *Node } func (n *Node) add(value int) { newNode := &Node{value: value, next: n.next} n.next = newNode }",Useful
+Performs a binary search on a sorted array to find the target value.,"def binary_search(arr, target): low, high = 0, len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] == target: return mid elif arr[mid] < target: low = mid + 1 else: high = mid - 1 return -1",Not Useful
+Checks if a string is a palindrome by comparing it with its reverse.,function isPalindrome(str) { return str === str.split('').reverse().join(''); },Useful
+Implements a queue with enqueue and dequeue operations.,class Queue { constructor() { this.items = []; } enqueue(element) { this.items.push(element); } dequeue() { return this.items.shift(); } },Useful
+Sorts an array using the merge sort algorithm.,fn merge_sort(arr: &mut [i32]) { if arr.len() <= 1 { return; } let mid = arr.len() / 2; let mut left = arr[0..mid].to_vec(); let mut right = arr[mid..].to_vec(); merge_sort(&mut left); merge_sort(&mut right); let mut i = 0; let mut j = 0; let mut k = 0; while i < left.len() && j < right.len() { if left[i] <= right[j] { arr[k] = left[i]; i += 1; } else { arr[k] = right[j]; j += 1; } k += 1; } while i < left.len() { arr[k] = left[i]; i += 1; k += 1; } while j < right.len() { arr[k] = right[j]; j += 1; k += 1; } },Not Useful
+Caches results of function calls to optimize performance.,def cache(func): cached_results = {} def wrapper(*args): if args in cached_results: return cached_results[args] result = func(*args) cached_results[args] = result return result return wrapper,Useful
+Defines a binary tree and includes methods for inserting new values.,class BinaryTree { constructor(value) { this.value = value; this.left = null; this.right = null; } insert(value) { if (value < this.value) { if (this.left) { this.left.insert(value); } else { this.left = new BinaryTree(value); } } else { if (this.right) { this.right.insert(value); } else { this.right = new BinaryTree(value); } } } },Useful
+Defines a Person struct and a method to greet.,"type Person struct { Name string Age int } func (p *Person) Greet() string { return ""Hello, my name is "" + p.Name }",Useful
+Reverses the input string using Python slicing.,def reverse_string(s): return s[::-1],Useful
+Determines if a number is prime by checking divisibility.,const isPrime = (num) => { if (num <= 1) return false; for (let i = 2; i <= Math.sqrt(num); i++) { if (num % i === 0) return false; } return true; },Useful
+Calculates the nth Fibonacci number using recursion.,fn fibonacci(n: u32) -> u32 { if n <= 1 { return n; } fibonacci(n - 1) + fibonacci(n - 2) },Not Useful
+Finds the maximum sum of a contiguous subarray using Kadane's algorithm.,"def find_max_subarray(arr): max_sum = current_sum = arr[0] for num in arr[1:]: current_sum = max(num, current_sum + num) max_sum = max(max_sum, current_sum) return max_sum",Useful
+Implements a min-heap data structure with an insert method.,"class MinHeap { constructor() { this.heap = []; } insert(num) { this.heap.push(num); this.bubbleUp(); } bubbleUp() { let index = this.heap.length - 1; while (index > 0) { let parentIndex = Math.floor((index - 1) / 2); if (this.heap[parentIndex] <= this.heap[index]) break; [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]]; index = parentIndex; } } }",Useful
+Calculates the greatest common divisor using the Euclidean algorithm.,"fn gcd(a: u32, b: u32) -> u32 { if b == 0 { a } else { gcd(b, a % b) } }",Useful
+Calculates the product of all numbers in a list.,def product_of_list(lst): product = 1 for num in lst: product *= num return product,Useful
+Recursively calculates the factorial of a number.,const factorial = (n) => { return n <= 1 ? 1 : n * factorial(n - 1); },Not Useful
+Defines a base Shape class that requires an area method to be implemented.,class Shape { constructor(color) { this.color = color; } area() { throw 'Not implemented'; } },Useful
+Sorts an array using the quick sort algorithm.,fn quick_sort(arr: &mut [i32]) { if arr.len() <= 1 { return; } let pivot = arr[arr.len() / 2]; let left: Vec<i32> = arr.iter().filter(|&&x| x < pivot).cloned().collect(); let right: Vec<i32> = arr.iter().filter(|&&x| x > pivot).cloned().collect(); quick_sort(&mut left); quick_sort(&mut right); arr.clear(); arr.extend(left); arr.push(pivot); arr.extend(right); },Not Useful
+Counts the occurrences of each element in a list and returns a dictionary.,def count_occurrences(lst): from collections import Counter return dict(Counter(lst)),Useful
+Finds the maximum value in an array.,function findMax(arr) { let max = arr[0]; for (let num of arr) { if (num > max) { max = num; } } return max; },Useful
+Calculates the depth of a binary tree recursively.,"fn binary_tree_depth(node: &Option<Box<Node>>) -> usize { match node { Some(n) => 1 + std::cmp::max(binary_tree_depth(&n.left), binary_tree_depth(&n.right)), None => 0 } }",Not Useful
+Splits a list into chunks of specified size.,"def chunk_list(lst, n): return [lst[i:i + n] for i in range(0, len(lst), n)]",Useful
+Defines a Person class with a method to greet.,"class Person { constructor(name, age) { this.name = name; this.age = age; } greet() { return `Hello, my name is ${this.name}`; } }",Useful
+Merges two sorted vectors into a single sorted vector.,"fn merge(left: Vec<i32>, right: Vec<i32>) -> Vec<i32> { let mut result = Vec::new(); let (mut i, mut j) = (0, 0); while i < left.len() && j < right.len() { if left[i] <= right[j] { result.push(left[i]); i += 1; } else { result.push(right[j]); j += 1; } } result.extend_from_slice(&left[i..]); result.extend_from_slice(&right[j..]); result",Useful
+Counts down to zero using recursion.,function countDown(num) { if (num <= 0) { console.log('Done!'); return; } console.log(num); countDown(num - 1); },Not Useful
+Checks if two strings are anagrams of each other.,"def is_anagram(str1, str2): return sorted(str1) == sorted(str2)",Useful
